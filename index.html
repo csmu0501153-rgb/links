@@ -4,467 +4,420 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ocean & Yvonne</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #f0eee9;
-  --navy: #10243e;
-  --blue: #4fa8d8;
-  --blue-light: #eaf1f5;
-  --orange: #ffb37a;
-  --red: #ff6b5e;
-  --white: #ffffff;
-  --text-sub: #4d6577;
-  --text-sub-dark: #7fb8de;
-  --radius: 20px;
-  --gap: 12px;
+  --paper:  #EDEAE3;
+  --card:   #F7F5F0;
+  --ink:    #24211C;
+  --rust:   #B5573C;
+  --slate:  #3E5C6B;
+  --ochre:  #C99B3F;
+  --moss:   #6E7F63;
+  --line:   #24211C;
+  --grey:   #8B857C;
 }
 
-html, body { min-height: 100%; background: var(--bg); }
+html, body { height: 100%; }
 
 body {
-  font-family: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
-  display: flex; justify-content: center;
-  padding: 40px 16px 56px;
+  font-family: 'Poppins', 'Noto Sans TC', sans-serif;
+  min-height: 100vh;
+  background: var(--paper);
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(24px, 6vw, 48px) clamp(14px, 4vw, 24px) clamp(40px, 8vw, 64px);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ── BENTO WRAPPER ── */
-.bento {
-  width: 100%; max-width: 368px;
-  background: var(--blue-light);
-  border-radius: 10px;
-  padding: 14px;
-  display: flex; flex-direction: column;
-  gap: var(--gap);
-  animation: up 0.45s ease both;
+/* subtle grid texture */
+body::before {
+  content:''; position: fixed; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(26,26,24,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,26,24,0.028) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
 }
-@keyframes up {
-  from { opacity:0; transform:translateY(14px); }
+
+.wrap {
+  position: relative; z-index: 1;
+  width: 100%; max-width: min(380px, 100%);
+  border: 2px solid var(--line);
+  background: var(--card);
+  animation: rise 0.5s cubic-bezier(.22,.9,.36,1) both;
+}
+@keyframes rise {
+  from { opacity:0; transform:translateY(16px); }
   to   { opacity:1; transform:translateY(0); }
 }
 
-/* ── TILE BASE ── */
-.tile {
-  border-radius: var(--radius);
-  padding: 22px;
-  position: relative;
+/* ── HEADER BAND ── */
+.band {
+  display: flex; height: 10px;
+  border-bottom: 2px solid var(--line);
 }
-
-/* ── EYEBROW ── */
-.eyebrow {
-  font: 700 10px/1 'Inter', sans-serif;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-/* ── ARROW BTN ── */
-.arr {
-  width: 34px; height: 34px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; cursor: pointer;
-  transition: opacity 0.15s;
-}
-.arr:hover { opacity: 0.8; }
-.arr svg { width: 14px; height: 14px; }
+.band span { flex: 1; }
+.band .b1 { background: var(--rust); }
+.band .b2 { background: var(--ochre); }
+.band .b3 { background: var(--slate); }
+.band .b4 { background: var(--moss); }
 
 /* ── PROFILE ── */
-.tile-profile {
-  background: var(--white);
-  display: flex; gap: 16px; align-items: flex-start;
+.profile {
+  padding: clamp(20px, 5vw, 28px) clamp(18px, 5vw, 24px) clamp(18px, 4.5vw, 24px);
+  border-bottom: 2px solid var(--line);
+  display: flex; gap: 16px; align-items: center;
 }
-.profile-name {
+.avatar {
+  width: clamp(56px, 15vw, 68px); height: clamp(56px, 15vw, 68px); flex-shrink: 0;
+  border: 2px solid var(--line);
+  overflow: hidden; border-radius: 0;
+}
+.avatar img, .avatar svg { width:100%; height:100%; object-fit:cover; display:block; }
+
+.p-text {}
+.p-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(17px, 4.6vw, 21px); font-weight: 800;
+  letter-spacing: -0.03em; color: var(--ink);
+  line-height: 1.1; text-transform: uppercase;
+}
+.p-bio {
   font-family: 'Noto Sans TC', sans-serif;
-  font-weight: 900; font-size: 21px;
-  color: var(--navy); line-height: 1.2;
-}
-.profile-bio {
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: 12.5px; color: var(--text-sub);
-  margin-top: 6px; line-height: 1.6;
-}
-.profile-tags { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-.ptag {
-  display: inline-flex; align-items: center;
-  padding: 6px 14px; border-radius: 100px;
-  font-size: 12px; font-weight: 500;
+  font-size: clamp(11px, 2.9vw, 12.5px); font-weight: 300;
+  color: var(--grey); line-height: 1.6; margin-top: 7px;
 }
 
-/* ── YOUTUBE ROW ── */
-.yt-row { display: flex; gap: var(--gap); }
-.tile-yt {
-  background: var(--navy); flex: 1;
-  display: flex; flex-direction: column;
-  justify-content: space-between; min-height: 118px;
-  border-radius: var(--radius); padding: 22px;
+
+/* ── LINK ROWS ── */
+.rows { }
+
+.row {
+  display: flex; align-items: stretch;
+  border: none;
+  border-bottom: 2px solid var(--line);
   text-decoration: none;
-  transition: opacity 0.15s;
+  cursor: pointer;
+  background: transparent;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  transition: background 0.14s;
 }
-.tile-yt:hover { opacity: 0.9; transform: translateY(-3px); box-shadow: 0 10px 24px rgba(16,36,62,0.25); }
-.tile-yt { transition: transform 0.22s cubic-bezier(.22,.9,.36,1), box-shadow 0.22s, opacity 0.15s; }
-.yt-name {
+.row:last-child { border-bottom: none; }
+.row:hover { background: rgba(26,26,24,0.045); }
+.row:active { background: rgba(26,26,24,0.09); }
+
+.row-swatch {
+  width: clamp(40px, 11vw, 48px); flex-shrink: 0;
+  border-right: 2px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+}
+.sw-red    { background: var(--rust); }
+.sw-blue   { background: var(--slate); }
+.sw-yellow { background: var(--ochre); }
+.sw-sage   { background: var(--moss); }
+.sw-ink    { background: var(--ink); }
+
+.row-swatch svg { width: 16px; height: 16px; }
+
+.row-main {
+  flex: 1; padding: clamp(12px, 3.4vw, 16px) clamp(13px, 3.6vw, 18px); min-width: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  text-align: left;
+}
+.row-title {
   font-family: 'Noto Sans TC', sans-serif;
-  font-weight: 900; font-size: 15px; color: #fff;
+  font-size: clamp(12.5px, 3.4vw, 14.5px); font-weight: 500;
+  color: var(--ink); letter-spacing: 0.01em; line-height: 1.3;
 }
-.yt-sub {
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: 10.5px; color: var(--text-sub-dark); margin-top: 4px;
-}
-.tile-yt-btn {
-  background: var(--red);
-  width: 60px; min-height: 118px;
-  border-radius: var(--radius);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 6px; cursor: pointer; border: none;
-  text-decoration: none;
-  transition: opacity 0.15s;
-}
-.tile-yt-btn:hover { opacity: 0.88; transform: translateY(-3px); box-shadow: 0 10px 24px rgba(255,107,94,0.35); }
-.tile-yt-btn { transition: transform 0.22s cubic-bezier(.22,.9,.36,1), box-shadow 0.22s, opacity 0.15s; }
-.tile-yt-btn svg { width: 20px; height: 20px; }
-
-/* ── ICELAND — blue full width ── */
-.tile-iceland {
-  background: var(--blue);
-  display: flex; justify-content: space-between; align-items: center;
-  cursor: pointer; transition: transform 0.22s cubic-bezier(.22,.9,.36,1), box-shadow 0.22s;
-}
-.tile-iceland:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(79,168,216,0.35); }
-.tile-iceland .title {
-  font-family: 'Noto Sans TC', sans-serif;
-  font-weight: 900; font-size: 16px; color: #fff;
-}
-.tile-iceland .sub {
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: 11px; color: rgba(255,255,255,.8); margin-top: 4px;
+.row-sub {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(8.5px, 2.2vw, 9.5px); font-weight: 500; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--grey); margin-top: 3px;
 }
 
-/* ── 2-COL ROW ── */
-.two-col { display: flex; gap: var(--gap); }
+.row-arrow {
+  width: clamp(38px, 10vw, 44px); flex-shrink: 0;
+  border-left: 2px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--ink);
+  transition: transform 0.16s;
+}
+.row:hover .row-arrow { transform: translateX(2px); }
 
-/* ── LOFOTEN — white ── */
-.tile-lofoten {
-  background: var(--white); flex: 1; min-height: 130px;
-  display: flex; flex-direction: column; justify-content: space-between;
-  border-radius: var(--radius); padding: 18px;
-  cursor: pointer; transition: transform 0.22s cubic-bezier(.22,.9,.36,1), box-shadow 0.22s;
+/* ── FOOTER ── */
+.foot {
+  border-top: 2px solid var(--line);
+  padding: 13px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--grey);
+  background: #EDEAE3;
 }
-.tile-lofoten:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(16,36,62,0.12); }
-.tile-lofoten .title {
-  font-family: 'Noto Sans TC', sans-serif;
-  font-weight: 700; font-size: 14px;
-  color: var(--navy); line-height: 1.3;
-}
-.tile-lofoten .sub {
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: 10px; color: var(--text-sub); margin-top: 5px;
-}
+.foot-dots { display: flex; gap: 4px; }
+.foot-dots i { width: 7px; height: 7px; display: block; border: 1px solid var(--line); }
+.fd1 { background: var(--rust); }
+.fd2 { background: var(--ochre); }
+.fd3 { background: var(--slate); }
 
-/* ── COPENHAGEN — orange ── */
-.tile-cph {
-  background: var(--orange); flex: 1; min-height: 130px;
-  display: flex; flex-direction: column; justify-content: space-between;
-  border-radius: var(--radius); padding: 18px;
-  cursor: pointer; transition: transform 0.22s cubic-bezier(.22,.9,.36,1), box-shadow 0.22s;
-}
-.tile-cph:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(255,179,122,0.4); }
-.tile-cph .title {
-  font-family: 'Noto Sans TC', sans-serif;
-  font-weight: 700; font-size: 14px;
-  color: var(--navy); line-height: 1.3;
-}
-.tile-cph .sub {
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: 10px; color: #5a4327; margin-top: 5px;
-}
-
-/* ── CONTACT — red ── */
-.tile-contact {
-  background: var(--red);
-  display: flex; justify-content: space-between; align-items: center;
-  cursor: pointer; transition: transform 0.22s cubic-bezier(.22,.9,.36,1), box-shadow 0.22s;
-}
-.tile-contact:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(255,107,94,0.4); }
-.tile-contact .title {
-  font-family: 'Noto Sans TC', sans-serif;
-  font-weight: 900; font-size: 16px; color: #fff;
-}
-
-/* ── MICRO ANIMATIONS ── */
-
-/* Staggered entrance */
-.bento > * { animation: cardUp 0.45s cubic-bezier(.22,.9,.36,1) both; }
-.bento > *:nth-child(1) { animation-delay: 0.05s; }
-.bento > *:nth-child(2) { animation-delay: 0.12s; }
-.bento > *:nth-child(3) { animation-delay: 0.18s; }
-.bento > *:nth-child(4) { animation-delay: 0.24s; }
-.bento > *:nth-child(5) { animation-delay: 0.30s; }
-.bento > *:nth-child(6) { animation-delay: 0.35s; }
-@keyframes cardUp {
-  from { opacity:0; transform:translateY(18px) scale(0.97); }
-  to   { opacity:1; transform:translateY(0) scale(1); }
-}
-
-/* Active press */
-.tile-iceland:active, .tile-lofoten:active, .tile-cph:active,
-.tile-contact:active, .tile-yt:active, .tile-yt-btn:active {
-  transform: scale(0.97) !important;
-  box-shadow: none !important;
-  transition: transform 0.08s, box-shadow 0.08s;
-}
-
-/* Arrow nudge on hover */
-.arr { transition: transform 0.2s cubic-bezier(.34,1.56,.64,1); }
-.tile-iceland:hover .arr,
-.tile-contact:hover .arr { transform: translate(3px, -3px); }
-.tile-lofoten:hover .arr,
-.tile-cph:hover .arr     { transform: translate(3px, -3px); }
-
-/* Profile tag pop */
-.ptag { transition: transform 0.18s; }
-.ptag:hover { transform: scale(1.06); }
-
-.bento-foot {
-  text-align: center; font-size: 10.5px;
-  letter-spacing: .08em; color: #7d95a4;
-  padding: 6px 0 2px;
-  font-family: 'Inter', sans-serif;
-}
-
-/* ════════════ MODAL ════════════ */
+/* ══ MODAL ══ */
 .modal-overlay {
   display: none; position: fixed; inset: 0; z-index: 200;
-  background: rgba(16,36,62,0.5);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  background: rgba(26,26,24,0.45);
   align-items: flex-end; justify-content: center;
 }
 .modal-overlay.open { display: flex; }
 
 .modal-sheet {
-  width: 100%; max-width: 480px;
-  background: var(--white);
-  border-radius: 24px 24px 0 0;
-  border-top: 1px solid rgba(16,36,62,0.08);
+  width: 100%; max-width: 460px;
+  background: #F7F5F0;
+  border: 2px solid var(--line);
+  border-bottom: none;
   max-height: 92svh; overflow-y: auto;
-  box-shadow: 0 -8px 40px rgba(16,36,62,0.15);
-  animation: sheetUp 0.3s cubic-bezier(.22,.9,.36,1) both;
+  animation: sheetUp 0.28s cubic-bezier(.22,.9,.36,1) both;
 }
-@keyframes sheetUp {
-  from { transform: translateY(100%); } to { transform: translateY(0); }
-}
+@keyframes sheetUp { from { transform:translateY(100%); } to { transform:translateY(0); } }
 
-.sheet-handle {
-  width: 32px; height: 3px; border-radius: 999px;
-  background: rgba(16,36,62,0.12); margin: 12px auto 0;
-}
+.sheet-band { display:flex; height:8px; border-bottom:2px solid var(--line); }
+.sheet-band span { flex:1; }
+
 .sheet-header {
   padding: 16px 22px 14px;
-  border-bottom: 1px solid rgba(16,36,62,0.08);
+  border-bottom: 2px solid var(--line);
   display: flex; align-items: center; justify-content: space-between;
 }
 .sheet-title {
   font-family: 'Noto Sans TC', sans-serif;
-  font-size: 18px; font-weight: 900; color: var(--navy);
+  font-size: clamp(15px, 4vw, 18px); font-weight: 700; color: var(--ink);
+  letter-spacing: 0.01em;
 }
 .sheet-close {
-  width: 30px; height: 30px; border-radius: 50%;
-  background: var(--blue-light); border: none;
-  color: var(--navy); font-size: 15px; cursor: pointer;
+  width: 28px; height: 28px;
+  background: transparent; border: 2px solid var(--line);
+  color: var(--ink); font-size: 14px; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: background 0.15s;
+  transition: background 0.14s; font-family: 'Poppins', sans-serif;
+  line-height: 1;
 }
-.sheet-close:hover { background: #d6e8f2; }
+.sheet-close:hover { background: var(--ink); color: #F7F5F0; }
 
-.sheet-body { padding: 20px 22px 44px; }
+.sheet-body { padding: clamp(18px,4.5vw,24px) clamp(18px,4.5vw,24px) clamp(36px,8vw,48px); }
 
 .form-desc {
   font-family: 'Noto Sans TC', sans-serif;
-  font-size: 13px; font-weight: 400;
-  color: var(--text-sub); line-height: 1.7; margin-bottom: 20px;
+  font-size: 12.5px; font-weight: 300; color: var(--grey);
+  line-height: 1.72; margin-bottom: 20px;
+  border-left: 3px solid var(--ink); padding-left: 12px;
 }
-.form-row { margin-bottom: 12px; }
+.form-row { margin-bottom: 13px; }
 .form-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--navy); opacity: 0.6;
+  font-family: 'Poppins', sans-serif;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ink);
   display: block; margin-bottom: 6px;
 }
 .form-input {
-  width: 100%; padding: 12px 14px;
-  border: 1.5px solid rgba(16,36,62,0.12);
-  background: var(--blue-light);
+  width: 100%; padding: clamp(11px,3vw,13px) clamp(12px,3.2vw,15px);
+  border: 2px solid var(--line);
+  background: #fff;
   font-family: 'Noto Sans TC', sans-serif;
-  font-size: 14px; font-weight: 400;
-  color: var(--navy); outline: none;
-  border-radius: 12px; appearance: none;
-  transition: border-color 0.15s, background 0.15s;
+  font-size: clamp(14px, 3.6vw, 15px); font-weight: 400;
+  color: var(--ink); outline: none;
+  border-radius: 0; appearance: none;
+  transition: border-color 0.14s;
 }
-.form-input:focus {
-  border-color: var(--blue);
-  background: var(--white);
-}
-.form-input::placeholder { color: rgba(16,36,62,0.22); }
-textarea.form-input { resize: vertical; min-height: 80px; line-height: 1.6; }
-select.form-input {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2310243e' stroke-width='1.5' fill='none' stroke-linecap='round' opacity='0.4'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 13px center;
-  padding-right: 36px; cursor: pointer;
-  background-color: var(--blue-light);
-}
-select.form-input option { background: #fff; color: var(--navy); }
+.form-input:focus { border-color: var(--slate); }
+.form-input::placeholder { color: rgba(26,26,24,0.22); }
+textarea.form-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 
 .submit-btn {
   width: 100%; margin-top: 10px;
-  background: var(--navy); color: #fff;
-  border: none; padding: 14px;
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: 14px; font-weight: 700;
-  cursor: pointer; border-radius: 12px;
-  transition: background 0.15s;
+  background: var(--ink); color: #F7F5F0;
+  border: 2px solid var(--line); padding: 13px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer; border-radius: 0;
+  transition: background 0.14s, color 0.14s;
 }
-.submit-btn:hover { background: #1a3a5c; }
-.submit-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.submit-btn:hover { background: var(--rust); border-color: var(--rust); }
+.submit-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
 .form-note {
   font-family: 'Noto Sans TC', sans-serif;
-  font-size: 11px; color: var(--text-sub);
-  margin-top: 10px; text-align: center; line-height: 1.6;
+  font-size: 11px; color: var(--grey); margin-top: 10px;
+  text-align: center; line-height: 1.6; font-weight: 300;
 }
 
-/* Success */
 .sheet-success {
-  display: none; margin-top: 16px; padding: 20px;
-  background: var(--blue-light);
-  border: 1.5px solid rgba(79,168,216,0.25);
-  border-radius: 16px; line-height: 1.65;
+  display: none; margin-top: 16px; padding: 18px;
+  border: 2px solid var(--line);
+  background: rgba(122,155,126,0.10);
 }
-.s-icon { font-size: 26px; display:block; margin-bottom:10px; }
+.s-icon { font-size: 22px; display:block; margin-bottom:9px; }
 .s-title {
   font-family: 'Noto Sans TC', sans-serif;
-  font-size: 17px; font-weight: 900; color: var(--navy);
+  font-size: 15px; font-weight: 700; color: var(--ink);
   display:block; margin-bottom:8px;
 }
 .s-body {
   font-family: 'Noto Sans TC', sans-serif;
-  font-size: 13px; color: var(--text-sub);
-  margin-bottom: 10px; line-height: 1.7;
+  font-size: 12.5px; color: var(--grey); margin-bottom:12px;
+  font-weight:300; line-height:1.72;
 }
 .s-yt-btn {
   display: flex; align-items: center; justify-content: space-between;
-  width: 100%; padding: 13px 16px;
-  background: var(--red); color: #fff;
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: 13px; font-weight: 700; text-decoration: none;
-  border-radius: 12px; margin-top: 14px; border: none;
-  transition: opacity 0.15s;
+  width: 100%; padding: 11px 15px;
+  background: var(--rust); border: 2px solid var(--line);
+  color: #F7F5F0; font-family: 'Poppins', sans-serif;
+  font-size: 11px; font-weight: 700; text-decoration: none;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  transition: background 0.14s;
 }
-.s-yt-btn:hover { opacity: 0.88; }
+.s-yt-btn:hover { background: #96432E; }
 .s-note {
   font-family: 'Noto Sans TC', sans-serif;
-  font-size: 11px; color: var(--text-sub);
-  margin-top: 10px; text-align:center; line-height:1.5;
+  font-size: 10.5px; color: var(--grey);
+  margin-top:10px; text-align:center; line-height:1.5; font-weight:300;
 }
-
 .sheet-error {
   display: none; margin-top:10px; padding:11px 14px;
-  background: rgba(255,107,94,0.08);
-  border: 1.5px solid rgba(255,107,94,0.25);
-  font-size:12px; color: var(--red); border-radius:12px;
+  border: 2px solid var(--rust); background: rgba(214,73,51,0.08);
   font-family: 'Noto Sans TC', sans-serif;
+  font-size:12px; color: var(--rust);
+}
+
+/* ── RWD ── */
+@media (max-width: 360px) {
+  .p-name { letter-spacing: -0.02em; }
+  .row-sub { letter-spacing: 0.10em; }
+  .foot { padding: 12px 16px; font-size: 8.5px; letter-spacing: 0.14em; }
+}
+@media (min-width: 481px) {
+  .wrap { max-width: 400px; }
+}
+@media (hover: none) {
+  .row:hover { background: transparent; }
+  .row:active { background: rgba(36,33,28,0.08); }
 }
 </style>
 </head>
 <body>
 
-<div class="bento">
+<div class="wrap">
+
+  <!-- COLOR BAND -->
+  <div class="band">
+    <span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span>
+  </div>
 
   <!-- PROFILE -->
-  <div class="tile tile-profile">
-    <svg width="64" height="64" viewBox="0 0 72 72" style="flex-shrink:0">
-      <circle cx="36" cy="36" r="36" fill="#10243e"/>
-      <path d="M14 40 Q22 30 30 40 T46 40 T62 40" stroke="#4fa8d8" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <circle cx="44" cy="24" r="9" fill="#ffb37a"/>
-    </svg>
-    <div>
-      <div class="profile-name">Ocean &amp; Yvonne</div>
-      <div class="profile-bio">收集旅途中的不期而遇，與那些剛好很好吃的蔬食日常。</div>
-      <div class="profile-tags">
-        <span class="ptag" style="background:#4fa8d8;color:#fff">蔬食日常</span>
-        <span class="ptag" style="background:#eaf1f5;color:#10243e">旅遊探險</span>
-      </div>
+  <div class="profile">
+    <div class="avatar">
+      <img src="https://yt3.googleusercontent.com/c0PfYv45N-hiB1GGmtlB0oc2f8qPB7i2OMU018Un5zVu0ZyFPvu2X6gCO6itzygg9kUZNONIiw=s160-c-k-c0x00ffffff-no-rj" alt="Ocean & Yvonne" />
+    </div>
+    <div class="p-text">
+      <div class="p-name">Ocean &amp;<br>Yvonne</div>
+      <div class="p-bio">收集旅途中的不期而遇，<br>與那些剛好很好吃的蔬食日常</div>
     </div>
   </div>
 
-  <!-- YOUTUBE -->
-  <div class="yt-row">
-    <a href="https://www.youtube.com/@YvonneandOcean" target="_blank" class="tile-yt">
-      <div class="eyebrow" style="color:#7fb8de">YOUTUBE CHANNEL</div>
-      <div>
-        <div class="yt-name">Ocean &amp; Yvonne</div>
-        <div class="yt-sub">旅遊 × 蔬食</div>
+  <!-- ROWS -->
+  <div class="rows">
+
+    <a href="https://www.youtube.com/@YvonneandOcean" target="_blank" class="row">
+      <div class="row-swatch sw-red">
+        <svg viewBox="0 0 24 18" fill="none"><path d="M9.6 12l5.8-3.5L9.6 5v7z" fill="#F7F5F0"/><rect x="1" y="1" width="22" height="16" rx="3" stroke="#F7F5F0" stroke-width="1.6"/></svg>
       </div>
+      <div class="row-main">
+        <div class="row-title">YouTube 頻道</div>
+        <div class="row-sub">Subscribe</div>
+      </div>
+      <div class="row-arrow">↗</div>
     </a>
-    <a href="https://www.youtube.com/@YvonneandOcean" target="_blank" class="tile-yt-btn">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7z" fill="#fff"/></svg>
-    </a>
+
+    <button class="row" onclick="openSheet('iceland')">
+      <div class="row-swatch sw-blue">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 20l5-9 4 5 3-5 6 9H3z" stroke="#F7F5F0" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="row-main">
+        <div class="row-title">冰島住宿攻略</div>
+        <div class="row-sub">Iceland</div>
+      </div>
+      <div class="row-arrow">→</div>
+    </button>
+
+    <button class="row" onclick="openSheet('lofoten')">
+      <div class="row-swatch sw-sage">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M2 19c3-3 6-5 10-5s7 2 10 5" stroke="#F7F5F0" stroke-width="1.8" stroke-linecap="round"/><path d="M5 13c2-2 4-4 7-4s5 2 7 4" stroke="#F7F5F0" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div class="row-main">
+        <div class="row-title">羅弗敦景點攻略</div>
+        <div class="row-sub">Lofoten</div>
+      </div>
+      <div class="row-arrow">→</div>
+    </button>
+
+    <button class="row" onclick="openSheet('copenhagen')">
+      <div class="row-swatch sw-yellow">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" stroke="#24211C" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" stroke="#24211C" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div class="row-main">
+        <div class="row-title">哥本哈根行程表</div>
+        <div class="row-sub">Copenhagen</div>
+      </div>
+      <div class="row-arrow">→</div>
+    </button>
+
+    <button class="row" onclick="openSheet('stockholm')">
+      <div class="row-swatch sw-ink">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 21V9l8-6 8 6v12" stroke="#F7F5F0" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 21v-6h6v6" stroke="#F7F5F0" stroke-width="1.8"/></svg>
+      </div>
+      <div class="row-main">
+        <div class="row-title">斯德哥爾摩景點</div>
+        <div class="row-sub">Stockholm</div>
+      </div>
+      <div class="row-arrow">→</div>
+    </button>
+
+    <button class="row" onclick="openSheet('contact')">
+      <div class="row-swatch" style="background:#F7F5F0">
+        <svg viewBox="0 0 24 20" fill="none"><rect x="2" y="2" width="20" height="16" stroke="#24211C" stroke-width="1.8"/><path d="M2 4l10 7 10-7" stroke="#24211C" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div class="row-main">
+        <div class="row-title">留言給我們</div>
+        <div class="row-sub">Contact</div>
+      </div>
+      <div class="row-arrow">→</div>
+    </button>
+
   </div>
 
-  <!-- 冰島 — full width blue -->
-  <div class="tile tile-iceland" onclick="openSheet('iceland')">
-    <div>
-      <div class="eyebrow" style="color:rgba(255,255,255,.8)">GUIDE</div>
-      <div class="title">冰島住宿攻略</div>
-      <div class="sub">各地區住宿推薦與訂房眉角</div>
-    </div>
-    <div class="arr" style="background:rgba(255,255,255,.3)">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="#fff" stroke-width="2"/></svg>
-    </div>
+  <!-- FOOTER -->
+  <div class="foot">
+    <span>© 2026 O&amp;Y</span>
+    <span class="foot-dots"><i class="fd1"></i><i class="fd2"></i><i class="fd3"></i></span>
   </div>
 
-  <!-- 2-col: 羅弗敦 + 哥本哈根 -->
-  <div class="two-col">
-    <div class="tile-lofoten" onclick="openSheet('lofoten')">
-      <div class="arr" style="background:#eaf1f5;align-self:flex-end">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="#10243e" stroke-width="2"/></svg>
-      </div>
-      <div>
-        <div class="title">羅弗敦<br>景點攻略</div>
-        <div class="sub">必去景點 × 隱藏版路線</div>
-      </div>
-    </div>
-    <div class="tile-cph" onclick="openSheet('copenhagen')">
-      <div class="arr" style="background:rgba(255,255,255,.35);align-self:flex-end">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="#10243e" stroke-width="2"/></svg>
-      </div>
-      <div>
-        <div class="title">哥本哈根<br>行程表</div>
-        <div class="sub">精選景點 × 省錢攻略</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 留言 — red -->
-  <div class="tile tile-contact" onclick="openSheet('contact')">
-    <div>
-      <div class="eyebrow" style="color:rgba(255,255,255,.8)">CONTACT</div>
-      <div class="title">留言給我們</div>
-    </div>
-    <div class="arr" style="background:rgba(255,255,255,.3)">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2"/></svg>
-    </div>
-  </div>
-
-  <div class="bento-foot">© 2026 OCEAN &amp; YVONNE</div>
 </div>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="overlayClick(event)">
   <div class="modal-sheet">
-    <div class="sheet-handle"></div>
+    <div class="sheet-band">
+      <span style="background:#B5573C"></span><span style="background:#C99B3F"></span>
+      <span style="background:#3E5C6B"></span><span style="background:#6E7F63"></span>
+    </div>
     <div class="sheet-header">
       <div class="sheet-title" id="sheetTitle"></div>
       <button class="sheet-close" onclick="closeSheet()">✕</button>
@@ -476,36 +429,31 @@ select.form-input option { background: #fff; color: var(--navy); }
 <script>
 const CONTACT_URL = "https://script.google.com/macros/s/AKfycbzWwtTkl-BvP8DUinm9R92WEx9yoPNG8iZRUgiTXe0WZYMEK_FAvXkpYPXohLFeot19/exec";
 
-const GUIDE_LINKS = {
-  '冰島住宿':   'https://docs.google.com/spreadsheets/d/1HBTTEBfCiL_e38ohOuJL9RO5Pk1tvMBsA73XWaU_dwI/edit?usp=sharing',
-  '羅弗敦景點': 'https://docs.google.com/spreadsheets/d/11xL82FIW8LtN-y26ezLlTqFN1EThRoJP0PQLkcgRLUc/edit?usp=sharing',
-  '哥本哈根行程': 'https://docs.google.com/spreadsheets/d/1WQzRNvP2VneF7SQeStqNUUDw-UlF6YRKHUuT3X7-rtU/edit?usp=sharing'
-};
-
 const FORMS = {
-  iceland:    { title:'冰島住宿攻略',   guide:'冰島住宿',    desc:'填寫資料後，我們會把整理好的冰島各地區住宿推薦與訂房眉角寄給你。完全免費。', msgRequired:false, submitLabel:'送出申請' },
-  lofoten:    { title:'羅弗敦景點攻略', guide:'羅弗敦景點',  desc:'填寫資料後，我們把羅弗敦必去景點與隱藏版路線整理好寄給你。完全免費。',   msgRequired:false, submitLabel:'送出申請' },
-  copenhagen: { title:'哥本哈根行程表', guide:'哥本哈根行程', desc:'填寫資料後，我們把哥本哈根行程表整理好寄給你。完全免費。',             msgRequired:false, submitLabel:'送出申請' },
+  iceland:    { title:'冰島住宿攻略',   guide:'冰島住宿',    desc:'填寫資料後，我們會把整理好的冰島各地區住宿推薦與訂房眉角寄給你，完全免費。', msgRequired:false, submitLabel:'送出申請' },
+  lofoten:    { title:'羅弗敦景點攻略', guide:'羅弗敦景點',  desc:'填寫資料後，我們把羅弗敦必去景點與隱藏版路線整理好寄給你，完全免費。',   msgRequired:false, submitLabel:'送出申請' },
+  copenhagen: { title:'哥本哈根行程表', guide:'哥本哈根行程', desc:'填寫資料後，我們把哥本哈根行程表整理好寄給你，完全免費。',             msgRequired:false, submitLabel:'送出申請' },
+  stockholm:  { title:'斯德哥爾摩景點', guide:'斯德哥爾摩景點', desc:'填寫資料後，我們把斯德哥爾摩必去景點與路線整理好寄給你，完全免費。',   msgRequired:false, submitLabel:'送出申請' },
   contact:    { title:'留言給我們',     guide:'留言',        desc:'合作邀請、旅遊問題、或任何想說的話都歡迎。',                              msgRequired:true,  submitLabel:'送出留言' }
 };
 
 function buildSuccess(type) {
   const yt = 'https://www.youtube.com/@YvonneandOcean';
   if (type === 'contact') {
-    return `<span class="s-icon">✉️</span><span class="s-title">留言已送出！</span><p class="s-body">感謝你的訊息，我們看到後會盡快回覆。等待的時候，歡迎先到 YouTube 頻道留言打聲招呼！</p><a href="${yt}" target="_blank" class="s-yt-btn">去 YouTube 頻道 <span>↗</span></a>`;
+    return `<span class="s-icon">✉</span><span class="s-title">留言已送出</span><p class="s-body">感謝你的訊息，我們看到後會盡快回覆。</p><a href="${yt}" target="_blank" class="s-yt-btn">前往 YouTube 頻道 <span>↗</span></a>`;
   }
-  return `<span class="s-icon">📬</span><span class="s-title">最後一步！</span><p class="s-body">我們收到你的申請了！請到 YouTube 頻道任一支影片下方留言 <strong style="color:#4fa8d8;">「我要攻略」</strong>，我們看到後就會把攻略寄給你。</p><a href="${yt}" target="_blank" class="s-yt-btn">去 YouTube 頻道留言 ↗</a><p class="s-note">留言是讓我們確認你有在追蹤，也方便我們找到你。</p>`;
+  return `<span class="s-icon">📬</span><span class="s-title">最後一步</span><p class="s-body">我們收到你的申請了。請到 YouTube 頻道任一支影片下方留言「<strong style="color:#B5573C;">我要攻略</strong>」，我們看到後就會把攻略寄給你。</p><a href="${yt}" target="_blank" class="s-yt-btn">前往 YouTube 留言 <span>↗</span></a><p class="s-note">留言讓我們確認你有在追蹤，也方便找到你。</p>`;
 }
 
 function buildForm(type) {
   const f = FORMS[type];
   let h = `<p class="form-desc">${f.desc}</p>`;
-  h += `<div class="form-row"><label class="form-label">名字</label><input class="form-input" type="text" id="f_name" placeholder="Yvonne"/></div>`;
+  h += `<div class="form-row"><label class="form-label">名字 / Name</label><input class="form-input" type="text" id="f_name" placeholder="Yvonne"/></div>`;
   h += `<div class="form-row"><label class="form-label">Email *</label><input class="form-input" type="email" id="f_email" placeholder="your@email.com"/></div>`;
-  const msgLabel = f.msgRequired ? '留言內容 *' : '想問的問題（選填）';
-  h += `<div class="form-row"><label class="form-label">${msgLabel}</label><textarea class="form-input" id="f_msg" placeholder="有什麼想問的都可以寫在這裡…" style="min-height:${f.msgRequired?'110px':'72px'}"></textarea></div>`;
+  const ml = f.msgRequired ? '留言內容 *' : '想問的問題（選填）';
+  h += `<div class="form-row"><label class="form-label">${ml}</label><textarea class="form-input" id="f_msg" placeholder="有什麼想問的都可以寫在這裡…" style="min-height:${f.msgRequired?'110px':'72px'}"></textarea></div>`;
   h += `<button class="submit-btn" id="sheetSubmitBtn" onclick="submitSheet('${type}')">${f.submitLabel}</button>`;
-  if (type !== 'contact') h += `<p class="form-note">送出後請到 YouTube 影片留言「我要攻略」，我們看到就寄！</p>`;
+  if (type !== 'contact') h += `<p class="form-note">送出後到 YouTube 影片留言「我要攻略」，我們看到就寄</p>`;
   h += `<div class="sheet-success" id="sheetSuccess">${buildSuccess(type)}</div>`;
   h += `<div class="sheet-error" id="sheetError">出了點問題，請稍後再試。</div>`;
   return h;
@@ -527,32 +475,26 @@ async function submitSheet(type) {
   const name  = (document.getElementById('f_name')?.value || '').trim();
   const email = (document.getElementById('f_email')?.value || '').trim();
   const msg   = (document.getElementById('f_msg')?.value || '').trim();
-  const btn     = document.getElementById('sheetSubmitBtn');
+  const btn = document.getElementById('sheetSubmitBtn');
   const success = document.getElementById('sheetSuccess');
-  const error   = document.getElementById('sheetError');
+  const error = document.getElementById('sheetError');
   const emailEl = document.getElementById('f_email');
 
   if (!email || !email.includes('@')) {
-    emailEl.style.borderColor = '#ff6b5e'; emailEl.focus();
+    emailEl.style.borderColor = '#B5573C'; emailEl.focus();
     setTimeout(() => { emailEl.style.borderColor = ''; }, 1500); return;
   }
   if (FORMS[type].msgRequired && !msg) {
     const m = document.getElementById('f_msg');
-    m.style.borderColor = '#ff6b5e'; m.focus();
+    m.style.borderColor = '#B5573C'; m.focus();
     setTimeout(() => { m.style.borderColor = ''; }, 1500); return;
   }
-
   btn.disabled = true; btn.textContent = '送出中…'; error.style.display = 'none';
-
   try {
     await fetch(CONTACT_URL, {
       method: 'POST', mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        type, guide: FORMS[type].guide,
-        name, email, message: msg,
-        timestamp: new Date().toISOString()
-      })
+      body: JSON.stringify({ type, guide: FORMS[type].guide, name, email, message: msg, timestamp: new Date().toISOString() })
     });
     btn.style.display = 'none';
     const note = document.querySelector('.form-note');
